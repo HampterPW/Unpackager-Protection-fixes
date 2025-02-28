@@ -45,21 +45,15 @@ FileInputButton.addEventListener('input', function (event) {
         alert("Please select a packaged project");
         return;
     }
-    
-    const levelDropdown = document.querySelector(".LevelDropdown");
-    if (!levelDropdown) {
-        alert("Error: Level dropdown not found. Please check if the dropdown exists.");
-        return;
-    }
 
     const getfile = new FileReader();
     getfile.onload = function (loaded) {
         if (DownloadFile) {
-            Obf(getfile.result, levelDropdown.value || "default")
+            Obf(getfile.result)
                 .then((downloadresult) => Downl(downloadresult, FileInputButton.files[0].name))
                 .catch((error) => Output(`Error: ${error.message}`, "Error"));
         } else {
-            Obf(getfile.result, levelDropdown.value || "default")
+            Obf(getfile.result)
                 .then((html) => {
                     const blob = new Blob([html], { type: "text/html" });
                     const bloburl = URL.createObjectURL(blob);
