@@ -46,14 +46,17 @@ FileInputButton.addEventListener('input', function (event) {
         return;
     }
 
+    const levelDropdown = document.querySelector(".LevelDropdown");
+    const levelValue = levelDropdown ? levelDropdown.value : null; // Use its value if it exists, otherwise null
+
     const getfile = new FileReader();
     getfile.onload = function (loaded) {
         if (DownloadFile) {
-            Obf(getfile.result)
+            Obf(getfile.result, levelValue) // Pass levelValue if it exists
                 .then((downloadresult) => Downl(downloadresult, FileInputButton.files[0].name))
                 .catch((error) => Output(`Error: ${error.message}`, "Error"));
         } else {
-            Obf(getfile.result)
+            Obf(getfile.result, levelValue)
                 .then((html) => {
                     const blob = new Blob([html], { type: "text/html" });
                     const bloburl = URL.createObjectURL(blob);
